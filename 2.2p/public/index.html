@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Random Quote & Calculator Demo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Quote area -->
+  <h1>Random Quote API Demo</h1>
+  <p>Click the button below to get a random quote from the server:</p>
+  <button id="fetchQuoteBtn">Get Quote</button>
+  <p id="quoteDisplay"></p>
+
+  <hr>
+
+  <!-- Calculator area -->
+  <h1>Simple Calculator</h1>
+  <p>Enter two numbers and select an operation:</p>
+  <input type="number" id="num1" placeholder="First number">
+  <input type="number" id="num2" placeholder="Second number">
+
+  <select id="operation">
+    <option value="add">Add (+)</option>
+    <option value="subtract">Subtract (-)</option>
+    <option value="multiply">Multiply (×)</option>
+    <option value="divide">Divide (÷)</option>
+  </select>
+
+  <button id="calculateBtn">Calculate</button>
+  <p id="calcResult"></p>
+
+  <!-- JS -->
+  <script>
+    // Quote button area
+    document.getElementById('fetchQuoteBtn').addEventListener('click', function() {
+      fetch('/api/quote')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('quoteDisplay').innerText = data.quote;
+        })
+        .catch(error => {
+          console.error('Error fetching quote:', error);
+          document.getElementById('quoteDisplay').innerText = 'Error fetching quote.';
+        });
+    });
+
+    // Calc button area
+    document.getElementById('calculateBtn').addEventListener('click', function() {
+      const num1 = parseFloat(document.getElementById('num1').value);
+      const num2 = parseFloat(document.getElementById('num2').value);
+      const operation = document.getElementById('operation').value;
+
+      if (isNaN(num1) || isNaN(num2)) {
+        document.getElementById('calcResult').innerText = "Please enter valid numbers.";
+        return;
+      }
+
+      const operationSymbols = { add: '+', subtract: '-', multiply: '×', divide: '÷' };
+
+      fetch('/calculate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ a: num1, b: num2, operation })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          document.getElementById('calcResult').innerText = "Error: " + data.error;
+        } else {
+          const symbol = operationSymbols[operation] || '?';
+          document.getElementById('calcResult').innerText =
+            `Result of equation ${num1} ${symbol} ${num2} = ${data.result}`;
+        }
+      })
+      .catch(error => {
+        console.error('Error calculating:', error);
+        document.getElementById('calcResult').innerText = 'Error performing calculation.';
+      });
+    });
+  </script>
+</body>
+</html>
