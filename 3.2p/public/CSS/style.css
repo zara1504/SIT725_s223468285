@@ -1,0 +1,82 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #FFE4EC;
+  margin: 0;
+  padding: 0;
+}
+
+nav {
+  background-color: #FFF2B2;
+}
+
+.right-nav-link {
+  display: flex;
+  align-items: center;
+  height: 64px;
+}
+.nav-wrapper {
+  width: 95%;
+  margin: 0 auto;
+}
+
+h1 {
+  font-weight: 700;
+}
+
+p {
+  font-weight: 300;
+}
+
+.user-image-size {
+  height: 64px;
+}
+
+.materialboxed-image {
+  width: 30%;
+  height: auto;
+  display: block;
+  margin: 0 auto 30px auto;
+
+  animation: fadeIn 1s ease-in-out;
+}
+
+.main-body {
+  padding-top: 20px;
+}
+
+.click-me-button {
+  background-color: #A8E6CF;
+  border-radius: 25px;
+  font-weight: 500;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.click-me-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+.card {
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.card-image img {
+  transition: transform 0.3s ease;
+}
+
+.card:hover .card-image img {
+  transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
