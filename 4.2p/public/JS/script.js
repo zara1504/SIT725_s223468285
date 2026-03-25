@@ -1,5 +1,5 @@
 const clickMe = () => {
-    alert("Hello from Macy, I hope you have a nice day... Woof Woof!");
+    alert("Hello from the Cows... Moo Moo!");
 };
 
 const submitForm = () => {
