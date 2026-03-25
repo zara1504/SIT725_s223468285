@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Highland Cows</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="CSS/style.css">
+</head>
+
+<body>
+<nav>
+  <div class="nav-wrapper navbar-size">
+    <a href="#" class="brand-logo left">
+      <img class="user-image-size" src="Images/paws.png">
+    </a>
+    <ul class="right">
+      <li>
+        <a class="right-nav-link" target="_blank"
+           href="https://en.wikipedia.org/wiki/Highland_cattle">
+          About Cows
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<main class="main-body">
+  <div class="container">
+    <div class="row">
+      <div class="col s12 center-align">
+        <h1>Highland Cows!</h1>
+        <p class="flow-text">This site is Highland Cows!</p>
+      </div>
+
+      <div class="col s12 center-align">
+        <img class="materialboxed materialboxed-image" src="Images/m4.png">
+      </div>
+
+      <div class="col s12 center-align">
+        <a class="waves-effect waves-light btn click-me-button" id="clickMeButton">
+          <i class="material-icons left">auto_fix_high</i>
+          Click Me!
+        </a>
+      </div>
+    </div>
+
+    <div class="row" id="card-section"></div>
+
+    <div class="row center-align">
+      <a class="waves-effect waves-light btn modal-trigger click-me-button" href="#modal1">
+        Open Form
+      </a>
+    </div>
+
+  </div>
+</main>
+
+<div id="modal1" class="modal modal-fixed-footer">
+  <div class="modal-content">
+    <h5>Contact me about more Highland Cow info</h5>
+
+    <form>
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="first_name" type="text">
+          <label for="first_name">First Name</label>
+        </div>
+
+        <div class="input-field col s6">
+          <input id="last_name" type="text">
+          <label for="last_name">Last Name</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="email" type="email">
+          <label for="email">Email</label>
+        </div>
+      </div>
+
+      <div class="row center-align">
+        <button type="submit" class="btn click-me-button" id="formSubmit">
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="JS/script.js"></script>
+</body>
+</html>
