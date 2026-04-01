@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Books Catalogue</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <h1>Books Catalogue developed by s223468285</h1>
+  <p>Click the button below to get all books from the server:</p>
+  <button id="fetchBooksBtn">Get all books</button>
+
+  <div id="booksDisplay"></div>
+  <div id="bookDetail"></div>
+
+  <script>
+    const btn = document.getElementById('fetchBooksBtn');
+    const booksDisplay = document.getElementById('booksDisplay');
+    const bookDetail = document.getElementById('bookDetail');
+
+    function renderList(books) {
+      booksDisplay.innerHTML = '';
+      bookDetail.innerHTML = '';
+
+      if (!Array.isArray(books) || books.length === 0) {
+        booksDisplay.textContent = 'No books found.';
+        return;
+      }
+
+      for (const book of books) {
+        const p = document.createElement('p');
+        const price = typeof book.price === 'string'
+          ? book.price
+          : (book.price && book.price.$numberDecimal) || book.price || '';
+        p.textContent = `${book.title} ${price} AUD`;
+        p.style.cursor = 'pointer';
+        p.addEventListener('click', () => fetchBookById(book.id));
+        booksDisplay.appendChild(p);
+      }
+    }
+
+    function renderDetail(book) {
+      bookDetail.innerHTML = '';
+      const price = typeof book.price === 'string'
+        ? book.price
+        : (book.price && book.price.$numberDecimal) || book.price || '';
+
+      bookDetail.innerHTML = `
+        <div id="detailBox">
+          <p><strong>Title:</strong> ${book.title}</p>
+          <p><strong>Author:</strong> ${book.author}</p>
+          <p><strong>Year:</strong> ${book.year}</p>
+          <p><strong>Genre:</strong> ${book.genre}</p>
+          <p><strong>Summary:</strong> ${book.summary}</p>
+          <p><strong>Price (AUD):</strong> ${price}</p>
+        </div>
+      `;
+    }
+
+    async function fetchBookById(id) {
+      try {
+        const res = await fetch(`/api/books/${id}`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const body = await res.json();
+        renderDetail(body.data);
+      } catch (err) {
+        console.error('Error fetching book:', err);
+        bookDetail.textContent = 'Error fetching book details.';
+      }
+    }
+
+    btn.addEventListener('click', async () => {
+      booksDisplay.textContent = 'Loading...';
+      bookDetail.innerHTML = '';
+      try {
+        const res = await fetch('/api/books');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const body = await res.json();
+        renderList(body.data);
+      } catch (err) {
+        console.error('Error fetching books:', err);
+        booksDisplay.textContent = 'Error fetching books.';
+      }
+    });
+  </script>
+</body>
+</html>
