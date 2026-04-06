@@ -18,7 +18,7 @@
  *   - Add sufficient tests to meet coverage requirements
  */
 
-const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
+const BASE_URL = process.env.BASE_URL || "http://localhost:3001";
 const API_BASE = "/api/books";
 
 // =============================
