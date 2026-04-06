@@ -58,10 +58,7 @@ const sampleData = [
 
 (async () => {
   try {
-    // Ensure unique index on id
     await Book.collection.createIndex({ id: 1 }, { unique: true });
-
-    // Clear and insert fresh data
     await Book.deleteMany({});
     await Book.insertMany(sampleData);
 
