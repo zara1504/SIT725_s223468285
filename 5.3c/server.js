@@ -22,10 +22,8 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// 404 handler
 app.use((req, res) => res.status(404).json({ message: 'Not found' }));
 
-// Error handler
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(500).json({ message: 'Server error' });
