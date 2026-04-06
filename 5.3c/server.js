@@ -4,8 +4,7 @@ const mongoose = require('mongoose');
 
 const PORT = 3001;
 
-mongoose.connect('mongodb://localhost:27017/booksdb');
-
+mongoose.connect('mongodb://127.0.0.1:27017/booksdb');
 mongoose.connection.on('connected', () => {
   console.log('Connected to MongoDB');
 });
@@ -23,6 +22,13 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+// 404 handler
+app.use((req, res) => res.status(404).json({ message: 'Not found' }));
+
+// Error handler
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ message: 'Server error' });
 });
+
+app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
