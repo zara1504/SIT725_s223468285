@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 
-const PORT = 3000;
+const PORT = 3001;
 
 mongoose.connect('mongodb://127.0.0.1:27017/DTbooksDB');
 mongoose.connection.on('connected', () => {
@@ -22,10 +22,8 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// 404 handler
 app.use((req, res) => res.status(404).json({ message: 'Not found' }));
 
-// Error handler
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(500).json({ message: 'Server error' });

@@ -135,8 +135,8 @@ function makeValidBook(id) {
 
 function makeValidUpdate() {
   return {
-    title: "Updated Title",
-    author: "Updated Author",
+    title: "New Title",
+    author: "New Author",
     year: 2020,
     genre: "Fiction",
     summary: "An updated summary that meets the minimum length requirement.",
@@ -215,7 +215,7 @@ async function run() {
   // ADDITIONAL TESTS
   // =============================
 
-  // ---- REQUIRED field tests ----
+  // REQUIRED
   await test({
     id: "T06",
     name: "Missing title CREATE",
@@ -266,7 +266,7 @@ async function run() {
     tags: ["CREATE_FAIL", "REQUIRED"]
   });
 
-  // ---- TYPE validation tests ----
+  // TYPE 
   await test({
     id: "T11",
     name: "Year is string not number",
@@ -287,7 +287,7 @@ async function run() {
     tags: ["CREATE_FAIL", "TYPE"]
   });
 
-  // ---- BOUNDARY tests ----
+  // BOUNDARY
   await test({
     id: "T13",
     name: "Year below minimum (999)",
@@ -318,7 +318,7 @@ async function run() {
     tags: ["CREATE_FAIL", "BOUNDARY"]
   });
 
-  // ---- LENGTH tests ----
+  // LENGTH
   await test({
     id: "T16",
     name: "Title too long (over 200 chars)",
@@ -359,7 +359,7 @@ async function run() {
     tags: ["CREATE_FAIL", "LENGTH"]
   });
 
-  // ---- TEMPORAL tests ----
+  // TEMPORAL 
   await test({
     id: "T20",
     name: "Year in the future",
@@ -370,7 +370,7 @@ async function run() {
     tags: ["CREATE_FAIL", "TEMPORAL"]
   });
 
-  // ---- UPDATE_FAIL tests ----
+  // UPDATE_FAIL 
   await test({
     id: "T21",
     name: "Update non-existent book",

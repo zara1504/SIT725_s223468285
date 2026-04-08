@@ -1,6 +1,6 @@
 const booksService = require('../services/books.service');
 
-// GET /api/books
+// GET for books
 exports.getAllBooks = async (req, res) => {
   try {
     const items = await booksService.getAllBooks();
@@ -18,7 +18,7 @@ exports.getAllBooks = async (req, res) => {
   }
 };
 
-// GET /api/books/:id
+// GET for book id's 
 exports.getBookById = async (req, res) => {
   try {
     const book = await booksService.getBookById(req.params.id);
@@ -43,7 +43,7 @@ exports.getBookById = async (req, res) => {
   }
 };
 
-// POST /api/books
+// POST for books 
 exports.createBook = async (req, res) => {
   try {
     const book = await booksService.createBook(req.body);
@@ -53,7 +53,7 @@ exports.createBook = async (req, res) => {
       message: 'Book created successfully'
     });
   } catch (err) {
-    // Unknown fields or immutable id
+    // unknown fields or immutable id
     if (err.status === 400) {
       return res.status(400).json({
         statusCode: 400,
@@ -61,7 +61,7 @@ exports.createBook = async (req, res) => {
         message: err.message
       });
     }
-    // Duplicate id
+    // dupe id
     if (err.code === 11000) {
       return res.status(409).json({
         statusCode: 409,
@@ -69,7 +69,7 @@ exports.createBook = async (req, res) => {
         message: 'A book with this ID already exists'
       });
     }
-    // Mongoose validation errors
+    // mongoose validation errors
     if (err.name === 'ValidationError') {
       const messages = Object.values(err.errors).map(e => e.message);
       return res.status(400).json({
@@ -86,7 +86,7 @@ exports.createBook = async (req, res) => {
   }
 };
 
-// PUT /api/books/:id
+// PUT for the book id's
 exports.updateBook = async (req, res) => {
   try {
     const book = await booksService.updateBook(req.params.id, req.body);
@@ -103,7 +103,7 @@ exports.updateBook = async (req, res) => {
       message: 'Book updated successfully'
     });
   } catch (err) {
-    // Unknown fields or immutable id
+    // unknown fields or immutable id
     if (err.status === 400) {
       return res.status(400).json({
         statusCode: 400,
@@ -111,7 +111,7 @@ exports.updateBook = async (req, res) => {
         message: err.message
       });
     }
-    // Mongoose validation errors
+    // mongoose validation errors
     if (err.name === 'ValidationError') {
       const messages = Object.values(err.errors).map(e => e.message);
       return res.status(400).json({
