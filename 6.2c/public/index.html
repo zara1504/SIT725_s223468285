@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>F1 Race Results</title>
+  <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+
+  <header>
+    <h1> F1 Race Results</h1>
+    <p>Season Highlights</p>
+  </header>
+
+  <main>
+    <section class="results">
+      <h2>Race Results</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Race</th>
+            <th>Driver</th>
+            <th>Team</th>
+            <th>Race Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Australian GP</td>
+            <td>Max Verstappen</td>
+            <td>Red Bull</td>
+            <td>1:27:43</td>
+          </tr>
+          <tr>
+            <td>Bahrain GP</td>
+            <td>Charles Leclerc</td>
+            <td>Ferrari</td>
+            <td>1:32:10</td>
+          </tr>
+          <tr>
+            <td>Monaco GP</td>
+            <td>Lewis Hamilton</td>
+            <td>Mercedes</td>
+            <td>1:45:22</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="calculator">
+      <h2>Average Lap Time Calculator</h2>
+      <form action="/avglaptime" method="GET">
+        <div>
+          <label for="totalSeconds">Total Race Time (seconds):</label>
+          <input type="number" id="totalSeconds" name="totalSeconds" required>
+        </div>
+        <div>
+          <label for="laps">Number of Laps:</label>
+          <input type="number" id="laps" name="laps" required>
+        </div>
+        <button type="submit">Calculate</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>SIT725 - 6.2C | Zara Danziger</p>
+  </footer>
+
+</body>
+</html>
