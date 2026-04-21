@@ -1,0 +1,326 @@
+/* ── Variables ───────────────────────────────── */
+:root {
+  --sky-top:    #00020d;
+  --sky-mid:    #050d2e;
+  --sky-bottom: #0d1a4a;
+  --horizon:    #1a0a2e;
+  --gold:       #f5d97a;
+  --gold-dim:   #a08840;
+  --white:      #fffef5;
+  --text-soft:  rgba(255,254,245,0.7);
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-title: 'Cinzel', serif;
+}
+
+/* ── Reset ───────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--sky-top);
+  font-family: var(--font-serif);
+  min-height: 100vh;
+  overflow: hidden;
+  cursor: default;
+}
+
+/* ── Sky ─────────────────────────────────────── */
+.sky {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, #0d1a4a 0%, #050d2e 40%, #00020d 100%);
+  overflow: hidden;
+}
+
+/* Subtle aurora band near horizon */
+.sky::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 35%;
+  background: linear-gradient(to top,
+    rgba(26,10,46,0.9) 0%,
+    rgba(13,26,74,0.4) 60%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Moon ────────────────────────────────────── */
+.moon {
+  position: absolute;
+  top: 6%;
+  right: 12%;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fffbe6, #f0d98a 60%, #c8a84b);
+  box-shadow:
+    0 0 30px 10px rgba(245, 217, 122, 0.25),
+    0 0 80px 30px rgba(245, 217, 122, 0.1);
+  animation: moonGlow 6s ease-in-out infinite alternate;
+}
+
+@keyframes moonGlow {
+  from { box-shadow: 0 0 30px 10px rgba(245,217,122,0.2), 0 0 80px 30px rgba(245,217,122,0.08); }
+  to   { box-shadow: 0 0 40px 16px rgba(245,217,122,0.35), 0 0 100px 40px rgba(245,217,122,0.15); }
+}
+
+/* ── Background twinkle stars (decorative) ───── */
+.bg-star {
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+  animation: twinkle var(--dur, 3s) ease-in-out infinite alternate;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes twinkle {
+  from { opacity: 0.15; transform: scale(1); }
+  to   { opacity: 0.9;  transform: scale(1.4); }
+}
+
+/* ── Wish Stars ──────────────────────────────── */
+.wish-star {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  animation: starAppear 1.2s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+  cursor: pointer;
+}
+
+.wish-star:hover .wish-label { opacity: 1; transform: translateY(0); }
+.wish-star:hover .star-glyph  { transform: scale(1.3); }
+
+@keyframes starAppear {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
+  60%  { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+.star-glyph {
+  transition: transform 0.3s ease;
+  line-height: 1;
+  filter: drop-shadow(0 0 6px currentColor);
+  animation: starPulse var(--pulse, 4s) ease-in-out infinite alternate;
+  animation-delay: var(--pdelay, 0s);
+}
+
+.wish-star.sm .star-glyph { font-size: 0.85rem; }
+.wish-star.md .star-glyph { font-size: 1.15rem; }
+.wish-star.lg .star-glyph { font-size: 1.5rem; }
+
+@keyframes starPulse {
+  from { filter: drop-shadow(0 0 4px currentColor); }
+  to   { filter: drop-shadow(0 0 12px currentColor) drop-shadow(0 0 20px currentColor); }
+}
+
+.wish-label {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 0.72rem;
+  color: var(--white);
+  background: rgba(5, 13, 46, 0.75);
+  border: 1px solid rgba(245, 217, 122, 0.2);
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+}
+
+/* ── Shooting Star ───────────────────────────── */
+.shooting-star {
+  position: absolute;
+  left: -10%;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 0 6px 2px rgba(255,255,255,0.8);
+  animation: shoot 1.4s cubic-bezier(0.2, 0, 0.8, 1) forwards;
+}
+
+.shooting-star::after {
+  content: '';
+  position: absolute;
+  top: 50%; right: 100%;
+  transform: translateY(-50%);
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(to left, rgba(255,255,255,0.7), transparent);
+}
+
+@keyframes shoot {
+  0%   { left: -5%;  opacity: 1; }
+  100% { left: 110%; opacity: 0; }
+}
+
+/* ── UI Overlay ──────────────────────────────── */
+.ui-overlay {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  padding: 2rem 2rem 2.5rem;
+  background: linear-gradient(to top, rgba(0,2,13,0.92) 0%, rgba(0,2,13,0.6) 70%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  z-index: 10;
+}
+
+/* ── Header ──────────────────────────────────── */
+header {
+  text-align: center;
+}
+
+h1 {
+  font-family: var(--font-title);
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.18em;
+  text-shadow: 0 0 20px rgba(245, 217, 122, 0.5);
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--text-soft);
+  margin-top: 0.2rem;
+  letter-spacing: 0.05em;
+}
+
+/* ── Wish form ───────────────────────────────── */
+.wish-form {
+  width: 100%;
+  max-width: 500px;
+  background: rgba(5, 13, 46, 0.6);
+  border: 1px solid rgba(245, 217, 122, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  transition: border-color 0.3s;
+}
+
+.wish-form:focus-within {
+  border-color: rgba(245, 217, 122, 0.5);
+  box-shadow: 0 0 24px rgba(245, 217, 122, 0.08);
+}
+
+textarea#wish-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--white);
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-style: italic;
+  padding: 1rem 1.2rem 0.5rem;
+  resize: none;
+  height: 68px;
+  line-height: 1.5;
+}
+
+textarea#wish-input::placeholder { color: rgba(255,254,245,0.3); }
+
+.form-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 1rem 0.8rem;
+}
+
+#char-count {
+  font-size: 0.72rem;
+  color: var(--gold-dim);
+  font-family: var(--font-serif);
+}
+
+button#wish-btn {
+  font-family: var(--font-title);
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  color: var(--sky-top);
+  background: var(--gold);
+  border: none;
+  padding: 0.5rem 1.4rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+}
+
+button#wish-btn:hover {
+  background: #ffe99a;
+  box-shadow: 0 0 16px rgba(245,217,122,0.4);
+}
+
+button#wish-btn:active { transform: scale(0.95); }
+
+/* ── Meta row ────────────────────────────────── */
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+#wish-count {
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--text-soft);
+  letter-spacing: 0.05em;
+}
+
+button#shoot-btn {
+  background: transparent;
+  border: 1px solid rgba(245,217,122,0.25);
+  color: var(--text-soft);
+  font-family: var(--font-serif);
+  font-size: 0.78rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+button#shoot-btn:hover {
+  border-color: rgba(245,217,122,0.6);
+  color: var(--gold);
+}
+
+/* ── Toast notification ──────────────────────── */
+.toast {
+  position: fixed;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+  background: rgba(5,13,46,0.85);
+  border: 1px solid rgba(245,217,122,0.3);
+  color: var(--gold);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.85rem;
+  padding: 0.5rem 1.4rem;
+  border-radius: 24px;
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.4s, transform 0.4s;
+  pointer-events: none;
+  z-index: 100;
+  white-space: nowrap;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
