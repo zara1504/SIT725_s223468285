@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3001;
 app.use(express.static('public'));
 
 const wishes = [];
-const MAX_WISHES = 80; 
+const MAX_WISHES = 80;
 
 io.on('connection', (socket) => {
   console.log(`User connected: ${socket.id}`);
@@ -22,27 +22,18 @@ io.on('connection', (socket) => {
     const wish = {
       id: Date.now() + '-' + Math.random().toString(36).slice(2, 7),
       text,
-      // star position
       x: parseFloat((Math.random() * 88 + 1).toFixed(2)),
       y: parseFloat((Math.random() * 75 + 5).toFixed(2)),
-      // sizing for stars 
       size: ['sm', 'md', 'lg'][Math.floor(Math.random() * 3)],
-      // colour 
       color: ['#fff782', '#faa4e5', '#b1e7fa', '#83ff89', '#ffb879'][Math.floor(Math.random() * 5)],
       createdAt: new Date().toLocaleTimeString(),
     };
 
     wishes.push(wish);
-    if (wishes.length > MAX_WISHES) wishes.shift(); 
+    if (wishes.length > MAX_WISHES) wishes.shift();
 
     io.emit('new-wish', wish);
     console.log(`New wish: "${text}"`);
-  });
-
-  socket.on('shooting-star', () => {
-    io.emit('shooting-star', {
-      y: parseFloat((Math.random() * 60 + 5).toFixed(2)),
-    });
   });
 
   socket.on('disconnect', () => {

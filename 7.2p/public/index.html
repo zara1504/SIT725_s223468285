@@ -9,30 +9,25 @@
   <link rel="stylesheet" href="CSS/style.css"/>
 </head>
 <body>
-  <div class="sky" id="sky">
-    <div class="moon"></div>
-  </div>
-
+  <div class="sky" id="sky"></div>
   <div class="ui-overlay">
     <header>
       <h1>Wishing Wall</h1>
-      <p class="subtitle">Write a wish. Let it become a star.</p>
+      <p class="subtitle">Send a wish and it will get sent to the sky.</p>
     </header>
 
     <div class="wish-form">
       <textarea id="wish-input" placeholder="I wish…" maxlength="80"></textarea>
       <div class="form-footer">
         <span id="char-count">80</span>
-        <button id="wish-btn">Release ✦</button>
+        <button id="wish-btn">Release</button>
       </div>
     </div>
 
     <div class="meta">
-      <span id="wish-count">0 wishes in the sky</span>
-      <button id="shoot-btn" title="Send a shooting star!">Shooting star</button>
+      <span id="wish-count">0 wishes</span>
     </div>
   </div>
-
   <script src="/socket.io/socket.io.js"></script>
   <script src="script.js"></script>
 </body>
